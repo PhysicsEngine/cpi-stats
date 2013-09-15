@@ -14,14 +14,18 @@ object App {
     //val data = List[Pair[Double,Double]]((1.0,1.0),(2.0,2.0),(3.0,3.0))
     
     //val data = List[Pair[Double,Double]]((1.0, Math.sin(1.0)), (2.0, Math.sin(2.0)), (3.0, Math.sin(3.0)))
-    val wlist = LeastSquares.estimate(train, 0.01)
+    val wlist = LeastSquares.estimate(train, 0.0)
     val test = DataReader.testRead("test.csv")
     
+    
+    val estimate = new PrintWriter("estimate.csv")
     test.foreach {
       x => {
-        println(x, LinearEquation.y(x, wlist))
+        estimate.println(x + "," + LinearEquation.y(x, wlist))
       }
     }
+    estimate.flush()
+    estimate.close()
     
 
   }
