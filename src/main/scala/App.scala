@@ -36,7 +36,7 @@ object App {
     	val tfilename = "train" + i + ".csv"
     	val efilename = "estimate" + i + ".csv"
     	val train = DataReader.trainRead(tfilename)
-    	val wlist = LeastSquares.estimate(train, 10.0)
+    	val wlist = LeastSquares.estimate(train, 0.000000001)
     	val test  = DataReader.testRead("test.csv")
     	val estimate = new PrintWriter(efilename)
     
