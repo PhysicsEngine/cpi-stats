@@ -7,8 +7,8 @@ from  numpy import *
 from pylab import *
 
 if __name__ == "__main__":
-    train = open('train.csv', 'rb')
-    estimate = open('estimate.csv', 'rb')
+    train = open('../data/train0.csv', 'rb')
+    estimate = open('../data/estimate_lr.csv', 'rb')
 
     reader = csv.reader(train)
     trainxs = []
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     estxs = array(estxs)
     estts = array(estts)
 
-    
+
     plot(trainxs, traints, 'bo')
     plot(estxs, estts, 'g-')
     xlim(0.0, 1.0)   

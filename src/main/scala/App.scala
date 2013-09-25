@@ -7,6 +7,34 @@ import com.github.tototoshi.csv._
 
 object App {
   def main(args: Array[String]) {
+    val trainData = DataReader.trainRead("./data/train0.csv")
+    val tmpX = trainData._1
+    val tmpT = trainData._2
+    
+    var xlist = List[DenseVector[Double]]()
+    var tlist = List[DenseVector[Double]]()
+    
+    for (i <- 0 until tmpX.length) {
+      xlist = DenseVector(tmpX(i)) :: xlist
+      tlist = DenseVector(tmpT(i)) :: tlist
+    }
+    
+    val testData  = DataReader.testRead("./data/test.csv")
+    
+    val linearRegression = new LinearRegression(5)
+    linearRegression.train(xlist, tlist)
+    
+    val eFile = new PrintWriter("./data/estimate_lr.csv")
+    testData.foreach {
+      x => {
+        val xVec = DenseVector(x)
+        eFile.println(x + "," + linearRegression.estimate(xVec))
+      }
+    }
+    eFile.flush()
+    eFile.close()
+    
+    
     /*
     val train = DataReader.trainRead("train.csv")
     
@@ -30,8 +58,6 @@ object App {
       }
     }
     * 
-    */
-
     for(i <- 0 to 19) {
     	val tfilename = "train" + i + ".csv"
     	val efilename = "estimate" + i + ".csv"
@@ -48,6 +74,8 @@ object App {
     	estimate.flush()
     	estimate.close()
     }
+    * 
+    */
     
 
   }

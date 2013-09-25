@@ -6,16 +6,19 @@ import com.github.tototoshi.csv._
 object DataReader {
   def trainRead(filename:String) = {
 	val reader = CSVReader.open(new File(filename))
-	var l = List[Pair[Double, Double]]()
+	var lx = List[Double]()
+	var lt = List[Double]()
 			
     reader.foreach {
 	  fields =>  {
-	    l =  (fields(0).toDouble, fields(1).toDouble) :: l
+	    lx = fields(0).toDouble :: lx
+	    lt = fields(1).toDouble :: lt
+	    //l =  (fields(0).toDouble, fields(1).toDouble) :: l
 	  }
 	}
     
     reader.close()
-    l
+    (lx, lt)
   }
   
   def testRead(filename:String) = {
