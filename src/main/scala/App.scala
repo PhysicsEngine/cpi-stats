@@ -20,15 +20,23 @@ object App {
     }
     
     val testData  = DataReader.testRead("./data/test.csv")
-    
+    /*
     val linearRegression = new LinearRegression(5)
-    linearRegression.train(xlist, tlist)
+    linearRegression.train(xlist, tlist, 0.0)
+    * 
+    */
+    
+    val bayesRegression = new BayesRegression(5, 0.0001, 15.0)
+    bayesRegression.train(xlist, tlist)
     
     val eFile = new PrintWriter("./data/estimate_lr.csv")
     testData.foreach {
       x => {
         val xVec = DenseVector(x)
-        eFile.println(x + "," + linearRegression.estimate(xVec))
+        val result = bayesRegression.estimate(xVec)
+        val up     = result._1 + Math.sqrt(result._2)
+        val below  = result._1 - Math.sqrt(result._2)
+        eFile.println(x + "," + result._1 + "," + up + "," + below )
       }
     }
     eFile.flush()
