@@ -4,7 +4,7 @@ import breeze.linalg._
 class BayesRegression(M: Int, Alpha: Double, Beta: Double) {
   var _mN  = DenseVector.zeros[Double](M)
   var _sN  = DenseMatrix.zeros[Double](M, M)
-  
+    
   private def phi(x: DenseVector[Double], i: Int): Double = {
 	Math.pow(x(0), i)
   }
@@ -43,6 +43,13 @@ class BayesRegression(M: Int, Alpha: Double, Beta: Double) {
     val mean = (_mN.t * phiVector).apply(0)
     val sigma = (1 / Beta) + (phiVector.t * _sN * phiVector).apply(0)
     (mean, sigma)
+  }
+  
+  def evidence(xlist: List[DenseVector[Double]], tlist:List[DenseVector[Double]]): Double = {
+    val tVec = DenseVector.zeros[Double](tlist.length)
+    for (i <- 0 until tlist.length) tVec(i) = tlist(i)(0)
+    val eMn = (Beta/2.0) * Math.pow(norm(tVec - designMatrix(xlist) * _mN), 2) + ((Alpha/2.0) * _mN.t * _mN).apply(0)
+    (M/2.0) * Math.log(Alpha) + (xlist.length/2.0) * Math.log(Beta) - eMn - 1/2.0 * Math.log(det(inv(_sN))) - xlist.length / 2.0 * Math.log(2 * Math.PI)
   }
 
 }

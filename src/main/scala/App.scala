@@ -26,7 +26,7 @@ object App {
     * 
     */
     
-    val bayesRegression = new BayesRegression(5, 0.0001, 15.0)
+    val bayesRegression = new BayesRegression(100, 0.0001, 15.0)
     bayesRegression.train(xlist, tlist)
     
     val eFile = new PrintWriter("./data/estimate_lr.csv")
@@ -41,6 +41,16 @@ object App {
     }
     eFile.flush()
     eFile.close()
+    
+    val evidenseFile = new PrintWriter("./data/evidense.csv")
+    for (i <- 2 until 100) {
+      val bayesRegression = new BayesRegression(i, 0.0001, 15.0)
+      bayesRegression.train(xlist, tlist)
+      val evidense = bayesRegression.evidence(xlist, tlist)
+      evidenseFile.println(i + "," + evidense)
+    }
+    evidenseFile.flush()
+    evidenseFile.close()
     
     
     /*
