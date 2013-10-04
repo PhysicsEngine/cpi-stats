@@ -7,6 +7,28 @@ import com.github.tototoshi.csv._
 
 object App {
   def main(args: Array[String]) {
+    var classData = ClassReader.trainRead("./data/classes.csv")
+    var testData = ClassReader.testRead("./data/test_cat.csv")
+        
+    val ld = new LinearDiscriminant(2)
+    val w = ld.train(classData)
+    println(w)
+    
+    val a = -w(1)/w(2)
+    val b = -w(0)/w(2)
+    var estimate_cat = new PrintWriter("./data/estimate_cat.csv")
+    testData.foreach {
+      x => {
+    	  val y = a * x + b
+    	  estimate_cat.println(x + "," + y)
+      }
+    }
+    estimate_cat.flush()
+    estimate_cat.close()
+
+    
+    /*
+     * Bayes estimation
     val trainData = DataReader.trainRead("./data/train0.csv")
     val tmpX = trainData._1
     val tmpT = trainData._2
@@ -20,12 +42,7 @@ object App {
     }
     
     val testData  = DataReader.testRead("./data/test.csv")
-    /*
-    val linearRegression = new LinearRegression(5)
-    linearRegression.train(xlist, tlist, 0.0)
-    * 
-    */
-    
+        
     val bayesRegression = new BayesRegression(100, 0.0001, 15.0)
     bayesRegression.train(xlist, tlist)
     
@@ -51,6 +68,8 @@ object App {
     }
     evidenseFile.flush()
     evidenseFile.close()
+    * 
+    */
     
     
     /*
