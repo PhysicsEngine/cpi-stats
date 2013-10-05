@@ -6,18 +6,21 @@ import numpy as np
 from pylab import *
 
 K = 2
-N = 200
+N = 50
 
 if __name__ == "__main__":
     cls1 = []
     cls2 = []
     
-    mean1 = [-0.5, 0.7]  
-    mean2 = [0.8, -0.8]  
-    cov = [[0.2,0.1], [0.1,0.2]]  
+    
+    mean1 = [-1.2, 1.4]  
+    mean2 = [-0.5, 0.5]  
+    mean3 = [1.6, -1.4]
+    cov = [[0.2,0.1], [0.1,0.1]]  
 
     cls1.extend(np.random.multivariate_normal(mean1, cov, N/2))
     cls2.extend(np.random.multivariate_normal(mean2, cov, N/2))
+    cls2.extend(np.random.multivariate_normal(mean3, cov, N/2))
 
 
     f = open("/Users/sasakiumi/MyWorks/cpi-stats/data/classes.csv", "w")

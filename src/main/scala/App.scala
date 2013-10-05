@@ -10,10 +10,29 @@ object App {
     var classData = ClassReader.trainRead("./data/classes.csv")
     var testData = ClassReader.testRead("./data/test_cat.csv")
         
+/*
+    val ld = new LeastSquareDiscriminant(2, 2)
+    val W = ld.train(classData)
+    println(W)
+    val a = - (W(0,1) - W(1,1)) / (W(0,2) - W(1,2))
+    val b = - (W(0,0) - W(1,0)) / (W(0,2) - W(1,2))
+    var estimate_cat = new PrintWriter("./data/estimate_cat.csv")
+    testData.foreach {
+      x => {
+    	  val y = a * x + b
+    	  estimate_cat.println(x + "," + y)
+      }
+    }
+    estimate_cat.flush()
+    estimate_cat.close()
+*/
+    
+    
+
+     //* For Perceptron discriminant
     val ld = new LinearDiscriminant(2)
     val w = ld.train(classData)
     println(w)
-    
     val a = -w(1)/w(2)
     val b = -w(0)/w(2)
     var estimate_cat = new PrintWriter("./data/estimate_cat.csv")
